@@ -1,39 +1,32 @@
-import React, {Component} from "react";
-import {Card,CardImg, CardImgOverlay, CardText,CardBody,CardTitle} from 'reactstrap';
+import React from "react";
+import {Card,CardImg, CardText,CardBody,CardTitle} from 'reactstrap';
 // import {CAMPSITES} from '../shared/campsites';
+import {Breadcrumb, BreadcrumbItem} from 'reactstrap';
+ import {Link} from 'react-router-dom';
 
-class CampsiteInfoComponent extends Component{
-    //    constructor(props){
-    //        super(props);
-    //        this.state={
-    //            campsite:{CAMPSITES}
-    //                }
-    //    }
 
-       renderCampsite(campsite){
+
+
+  function RenderCampsite({campsite}){
              return(
-                 
-                   
-                       <div className="col-md-5 m-1">
-                       <Card>
+                  <div className="col-md-5 m-1">
+                    <Card>
                         <CardImg top src={campsite.image} alt={campsite.name} />
                         <CardBody>
-                        <CardTitle>
-                            {campsite.name}
-                        </CardTitle>
-                        <CardText>
+                            
+                            <CardText>
                             {campsite.description}
-                        </CardText>
+                            </CardText>
                        </CardBody>
-                       </Card>
-                       </div>
+                    </Card>
+                 </div>
                   
 
                  
              )
        }
 
-       renderComments(comments){
+   function RenderComments({comments}){
           if(comments){
               return(
                   <div className="col-md-5 m-1">
@@ -58,28 +51,34 @@ class CampsiteInfoComponent extends Component{
        }
        
 
-    render(){
-       if(this.props.campsite){
+    function CampsiteInfoComponent(props){
+       if(props.campsite){
            return(
                <div className="container">
-                  <div className="row">
-                     {this.renderCampsite(this.props.campsite)}
-                     {this.renderComments(this.props.campsite.comments)}
-                  </div>
-               </div>
-           )
-       } else{<div>
-
-       </div>}
+                   <div className="row">
+                      <div className="col">
+                         <Breadcrumb>
+                          <BreadcrumbItem><Link to="/directory">Directory</Link></BreadcrumbItem>
+                          <BreadcrumbItem active>{props.campsite.name}</BreadcrumbItem>
+                         </Breadcrumb>
+                       <h2>{props.campsite.name}</h2>
+                       <hr />
+                       </div>
+                   </div>
+                   <div className="row">
+                    <RenderCampsite campsite={props.campsite}/>
+                    <RenderComments comments={props.comments}/>
+                    </div>
+              </div>
+           );
+       } 
       
 
       
-        return(
-           <div>
-
-           </div>
-        )
+        return <div />
+           
+        
     }
-}
+
 
 export default CampsiteInfoComponent;
